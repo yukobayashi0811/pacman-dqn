@@ -24,6 +24,8 @@ Under the official matched-seed evaluation, the mean increased from **492** befo
 
 The elapsed time comes directly from `training_summary.json`. It covers training and periodic demonstrations; the notebook separately ran the five baseline and five final evaluation games.
 
+The submitted final run completed normally and was not interrupted; it performed 18,783 learning updates.
+
 ## Hyperparameters, search, and prediction
 
 The final choices are:
@@ -159,4 +161,4 @@ Select the `Python 3.13 (pacman-dqn)` / `py313` kernel, confirm the three hyperp
 - [Periodic evaluation scores](results/demo_scores.json)
 - [Written reflection](results/reflection.md)
 
-The complete final run, model checkpoints, and ZIP remain locally under `pacman_runs/20260908_220421_982055/`. The `pacman_runs/` directory and all `.pt` files are ignored and are not part of the Git submission.
+The complete final run and model checkpoints remain in `pacman_runs/20260908_220421_982055/`, and the full ZIP is saved as `pacman_runs/20260908_220421_982055.zip`. The `pacman_runs/` directory and all `.pt` files are ignored and are not part of the Git submission.
