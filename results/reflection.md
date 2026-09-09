@@ -3,31 +3,29 @@
 ## Configuration
 
 - Exploration: `0.20`
-- Episodes: `100`
-- Learning rate: `0.0001`
+- Episodes: `125`
+- Learning rate: `0.00005`
 - Device: Apple MPS
 - Python: `3.13.15`
 - Environment: `ALE/MsPacman-v5`
 - Seed: `42`
 
-I expected modest improvement because 20% exploration preserves opportunities to discover new moves after the random warm-up, while 100 episodes provide repeated experience and a learning rate of 0.0001 keeps the network updates relatively small.
+After short one-variable-at-a-time screens, I expected the lower learning rate to make weight updates steadier and 25 additional episodes to provide enough extra experience, while 20% exploration continued trying alternative actions. A fresh verification run was used rather than reusing candidate weights.
 
 ## Results
 
-The run completed all 100 episodes, 63,943 agent decisions, and 15,736 learning updates in about 217 seconds of training and periodic demonstrations.
+The run completed all 125 episodes, 76,129 agent decisions, and 18,783 learning updates in 222.543527 seconds of training and periodic demonstrations.
 
 | Evaluation seed | Before training | After training | Change |
 |---:|---:|---:|---:|
-| 101 | 350 | 860 | +510 |
-| 202 | 500 | 450 | -50 |
-| 303 | 320 | 780 | +460 |
-| 404 | 800 | 780 | -20 |
-| 505 | 490 | 800 | +310 |
-| **Mean** | **492** | **734** | **+242** |
+| 101 | 350 | 710 | +360 |
+| 202 | 500 | 840 | +340 |
+| 303 | 320 | 790 | +470 |
+| 404 | 800 | 660 | -140 |
+| 505 | 490 | 710 | +220 |
+| **Mean** | **492** | **742** | **+250** |
 
-The matched-seed evaluation mean increased by about 49%. Three of five games improved, while two declined slightly. The first 25 training episodes averaged 706.4 points and the final 25 averaged 790.8, although individual training scores remained volatile, ranging from 120 to 2,110.
-
-In the seed-101 gameplay excerpts, the untrained agent finished with 350 points. The trained agent moved farther through the maze, collected more pellets, and finished with 860 points.
+The matched-seed mean increased by about 50.8%, and four of five games improved. The first 25 training episodes averaged 688.8 points and the final 25 averaged 704.0, though individual scores ranged from 130 to 2,170. The five trained evaluation scores were relatively compact: their standard deviation was about 64.3 and their range was 180.
 
 ![Training dashboard](training_dashboard.png)
 
@@ -41,10 +39,10 @@ In the seed-101 gameplay excerpts, the untrained agent finished with 350 points.
 
 ## Interpretation and limitation
 
-This run provides evidence that learning improved performance under this small, fixed evaluation: the same seeds and 5% evaluation exploration were used before and after, the mean increased, and the saved model weights changed while remaining finite. The rising prediction loss does not by itself prove failure or success; game score is the relevant outcome, and the scores stayed noisy.
+The evaluation supplies evidence of improvement under the fixed classroom methodology: before and after used identical seeds, 5% evaluation exploration, and the same 3,000-decision maximum. Game score, rather than loss, supports the conclusion. Mean episode loss increased late in training even though the trained evaluation mean exceeded the baseline.
 
-The largest limitation is the five-game evaluation sample. It is too small to establish reliable general performance, especially because Atari uses sticky actions and GPU execution can vary even with fixed seeds. This classroom model also uses a deliberately small replay memory and far less training than benchmark-scale DQN agents.
+The main limitation is that only five fixed games were used, and those same seeds informed hyperparameter selection. The verified mean is only eight points above the previous submission's 734, so that small advantage may not generalize even though the fresh verification reproduced the candidate's scores. Seed 404 also declined after training.
 
 ## Next experiment
 
-I would change only the episode count from 100 to 200, keeping exploration at 0.20 and the learning rate at 0.0001. I would then compare the same five evaluation seeds again to test whether longer training produces a more consistent improvement rather than relying on a single favorable run.
+I would change exactly one hyperparameter: increase episodes from 125 to 150. Exploration would remain 0.20, learning rate would remain 0.00005, and all official evaluation and classroom settings would remain unchanged.
