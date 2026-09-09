@@ -17,6 +17,16 @@ No coding is needed. Keep `pacman_player.py` beside the notebook for the local f
 Try five episodes to check your setup. Useful Atari learning may require much longer runs.
 Exploration stays constant after 1,000 random warm-up decisions. The code includes an instruction for Claude Code or Codex to ask the student for these three choices before training.
 
+## Completed experiment
+
+The final local run used 20% exploration, 100 episodes, and a learning rate of 0.0001 on Apple MPS. It completed 63,943 decisions and 15,736 learning updates. Across the same five evaluation seeds, the mean score increased from 492 before training to 734 after training. Because five games are a small sample and two individual seeds declined slightly, this result is evidence of improvement for this run rather than a broad performance guarantee.
+
+- [Experiment reflection](results/reflection.md)
+- [Training dashboard](results/training_dashboard.png)
+- [Before/after scores](results/comparison.json)
+- [Before-training gameplay](results/episode_0000.gif)
+- [After-training gameplay](results/final_best.gif)
+
 ## Open and run
 
 **Google Colab:** use the Colab button above, select Runtime → Change runtime type → T4 GPU if available, edit the three values in section 1, and choose Runtime → Run all. The setup cell installs packages automatically.
